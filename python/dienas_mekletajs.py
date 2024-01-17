@@ -1,5 +1,5 @@
 def dienas_mekletajs (sis_gads, sis_menesis, sis_datums, si_diena, dz_gads, dz_menesis, dz_datums):
-    menesu_dienu_skaits = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    menesu_dienu_skaits = [31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     
     #Skaitām, cik dienas ir pagājušas
     #Pārbaude, vai šogad jau ir bijusi dzimšanas diena
@@ -32,9 +32,40 @@ def dienas_mekletajs (sis_gads, sis_menesis, sis_datums, si_diena, dz_gads, dz_m
     pagajusas_dienas += garie_gadi
 
     # cik pilni mēneši ir pagājuši?
-    # cik dienas ir kopā pa tiem mēnešiem?
-    # cik dienas ir pagājušas nepilnajā mēnesī?
+    if sis_menesis>=dz_menesis:
+       pilni_menesi = sis_menesis-dz_menesis
+    else:
+      pilni_menesi = sis_menesis+12-dz_menesis
+    if vai_datums_pagajis(1, sis_datums, 1, dz_datums):
+        pilni_menesi = pilni_menesi - 1
+    
+    dienas_menesos = 0
 
+
+    for i in range(dz_menesis, sis_menesis):
+        menesis=dz_menesis
+    while menesis != sis_menesis:
+        if menesis  == 13:
+            menesis=1
+        dienas_menesos += menesu_dienu_skaits[menesis]
+        menesis +=1
+
+    pagajusas_dienas += dienas_menesos
+
+    if sis_datums>=dz_datums:
+        pagajusas_dienas += sis_datums-dz_datums
+    else:
+        pagajusas_dienas += sis_datums + menesu_dienu_skaits[sis_menesis-1] - dz_datums
+        print("Pagajušas")
+    # cik dienas ir kopā pa tiem mēnešiem?
+        
+
+    # cik dienas ir pagājušas nepilnajā mēnesī?
+    dienu_atlikums = pagajusas_dienas % 7 
+
+    dz_diena = si_diena-dienu_atlikums
+    if dz_diena <=0:
+        dz-diena +=7
     return "OK"
 
 
@@ -47,3 +78,5 @@ def vai_datums_pagajis(tagad_menesis, tagad_datums, salidzinamais_menesis, salid
         return True
     return False
     
+dz_d = int(input("Lūdzu ievadiet savu dzimšanas dienu!:"))
+
